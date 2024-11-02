@@ -40,7 +40,7 @@
 # Reference
 
 - [official python tutorial](https://docs.python.org/zh-cn/3.10/tutorial/index.html)
-- [python projects](Build software better, together)
+- [python projects](https://github.com/stars/kenluobo/lists/python)
 - [a python learning suggestion set](https://pythonguidecn.readthedocs.io/zh/latest/intro/learning.html)
 - [a byte of python](https://learnku.com/docs/byte-of-python/2018)
 - [opencv python tutorials](https://opencv-python-tutorials.readthedocs.io/zh/latest)
