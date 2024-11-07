@@ -1,6 +1,10 @@
-#!/usr/bin/env python3
-
 import unittest
+from enum import Enum
+
+class Color(Enum):
+    Red = "red"
+    Yellow = "yellow"
+    Blue = "blue"
 
 
 class TestControlFlowStatement(unittest.TestCase):
@@ -22,6 +26,26 @@ class TestControlFlowStatement(unittest.TestCase):
         self.assertEqual(
             target_words_str, words_str, "fail to generate target_words_str"
         )
+
+    def test_enum_statement(self):
+        color = Color("red")
+
+        match color:
+            case Color.Red:
+                self.assertEqual(color, Color.Red, "color is red")
+
+        match color:
+            case Color.Blue:
+                self.assertNotEqual(color, Color.Blue, "color is red, not blue")
+            case _:
+                self.assertEqual("_", "_", "color match default")
+
+        match color:
+            case Color.Red if False:
+                self.assertEqual(color, Color.Red, "test \"case expression if condition expression\": color is red")
+            case Color.Red if True:
+                self.assertEqual(color, Color.Red, "test \"case expression if condition expression\": color is red")
+
 
 
 if __name__ == "__main__":
