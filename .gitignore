@@ -1,6 +1,22 @@
+# IDE
 .idea
+.vscode
 
+# python
 __pycache__
-
 venv*
+
+# c/cpp
+build
+
+*.out
+
+*.a
+*.lib
+
+*.so
+*.dylib
+*.dll
+
+# java
 
