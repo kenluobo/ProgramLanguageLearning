@@ -77,6 +77,11 @@ void test_deprecated_attribute() {
 }
 
 //=============================================================================
+void test_fallthrought_attribute() {
+  // todo
+}
+
+//=============================================================================
 void test() {
   // TEST(test_cplusplus_version);
   // TEST(test_assume_attribute);
