@@ -64,6 +64,8 @@ class TestMaybeUnusedClass {
   } C;
 };
 
+// if specify -Wunused-variable, the unused variable with [[maybe_unused]] will
+// not be diagnosed
 void test_maybe_unused_attribute([[maybe_unused]] int num) {
   TestMaybeUnusedClass TMUC;
   [[maybe_unused]] int local_val = 10;
@@ -77,15 +79,33 @@ void test_deprecated_attribute() {
 }
 
 //=============================================================================
-void test_fallthrought_attribute() {
-  // todo
+void test_fallthrought_attribute(int choice) {
+  int placeholder{1};
+  switch (choice) {
+  case 0:
+  case 1:
+    placeholder; // use -Wno-unused-value to screen warning
+    // [[fallthrough]];
+  case 2:
+    placeholder;
+  case 3:
+    if (true) {
+      // [[fallthrough]];
+    } else {
+      return;
+    }
+  default:
+    placeholder;
+  }
 }
 
 //=============================================================================
 void test() {
-  // TEST(test_cplusplus_version);
+  TEST(test_cplusplus_version);
   // TEST(test_assume_attribute);
-  TEST(test_maybe_unused_attribute);
+  TEST(test_deprecated_attribute);
+  TEST(test_maybe_unused_attribute, 10);
+  TEST(test_fallthrought_attribute, 2);
 }
 
 //=============================================================================
