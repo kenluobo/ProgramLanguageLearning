@@ -27,8 +27,24 @@ void test_signal_abort() {
 }
 
 // ==============================================================
+void handle_atexit_signal_1() { std::cout << "exit 1\n"; }
+void handle_atexit_signal_2() { std::cout << "exit 2\n"; }
+
+void test_signal_exit() {
+  const int ret1 = std::atexit(handle_atexit_signal_1);
+  const int ret2 = std::atexit(handle_atexit_signal_2);
+
+  if (ret1 or ret2) {
+    std::cout << "register handle atexit failure\n";
+  }
+
+  std::cout << "return test_signal_exit\n";
+}
+
+// ==============================================================
 void test() {
   // TEST(test_signal_abort);
+  TEST(test_signal_exit);
 }
 
 // ==============================================================
