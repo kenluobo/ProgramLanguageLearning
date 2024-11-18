@@ -1,4 +1,5 @@
 #include <cstdio>
+#include <iostream>
 #include <version>
 
 #define TEST(FUNC, ...)                                                        \
