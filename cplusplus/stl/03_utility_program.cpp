@@ -2,6 +2,7 @@
 
 #include <csignal>
 #include <cstdlib>
+#include <utility>
 
 //==============================================================
 void handle_abort_signal(int signal_no) {
@@ -42,9 +43,66 @@ void test_signal_exit() {
 }
 
 // ==============================================================
+struct Resource {
+  ~Resource() { std::cout << "call Resource dtor\n"; }
+};
+
+Resource global_resource;
+
+#define recycling_action_before_quick_exit 1
+#define no_recycling_action_before_quick_exit 0
+template <int N> void handle_quick_exit_signal() {
+  if (N == 0) {
+    std::cout << N << ": do not execute dtor" << "\n";
+  } else {
+    global_resource.~Resource();
+    std::cout << N << ": do execute dtor" << "\n";
+  }
+}
+
+void test_quick_exit() {
+  int ret1 = at_quick_exit(
+      handle_quick_exit_signal<recycling_action_before_quick_exit>);
+  int ret2 = at_quick_exit(
+      handle_quick_exit_signal<no_recycling_action_before_quick_exit>);
+  if (ret1 or ret2) {
+    std::cerr << "register handle_quick_exit_signal error\n";
+  }
+
+  Resource local_resource;
+
+  std::cout << "before call quick_exit\n";
+  std::quick_exit(EXIT_SUCCESS);
+  std::cout << "after call quick_exit\n";
+}
+
+// ==============================================================
+void test_unreachable() {
+#ifdef __cpp_lib_unreachable
+  std::cout << "before std::unreachable()\n";
+  std::unreachable();
+  std::cout << "after std::unreachable()\n";
+#else
+
+#ifdef __has_builtin
+
+#if __has_builtin(__builtin_unreachable)
+  std::cout << "before __builtin_unreachable()\n";
+  __builtin_unreachable();
+  std::cout << "after __builtin_unreachable()\n";
+#endif
+
+#endif
+
+#endif
+}
+
+// ==============================================================
 void test() {
   // TEST(test_signal_abort);
-  TEST(test_signal_exit);
+  // TEST(test_signal_exit);
+  // TEST(test_quick_exit);
+  TEST(test_unreachable);
 }
 
 // ==============================================================
