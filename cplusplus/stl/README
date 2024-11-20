@@ -12,6 +12,7 @@
 
 ### memory
 - [x] [new operator](https://zh.cppreference.com/w/cpp/memory/new)
+- [x] [placement new](https://zh.cppreference.com/w/cpp/memory/new)
 - [ ] [memory layout](https://zh.cppreference.com/w/cpp/memory/align)
 - [ ] static memory allocate
 

@@ -9,3 +9,7 @@
   } while (0);
 
 #define CONNECT_STRING(...) (#__VA_ARGS__)
+
+template <typename... Args> void out(Args... args) {
+  (std::cout << ... << args) << "\n";
+}
