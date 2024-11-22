@@ -16,11 +16,14 @@
 - [ ] [memory layout](https://zh.cppreference.com/w/cpp/memory/align)
 - [ ] static memory allocate
 
+### type
+- [ ] type trait
+
 ### misc
 - [x] [attribute](https://zh.cppreference.com/w/cpp/feature_test)
+- [x] [program utility](https://zh.cppreference.com/w/cpp/utility/program)
 
 ## stl
 
-### program
-- [x] [program utility](https://zh.cppreference.com/w/cpp/utility/program)
+- [x] initializer_list
 
