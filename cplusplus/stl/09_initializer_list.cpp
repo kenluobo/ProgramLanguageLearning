@@ -1,7 +1,5 @@
-#include "utils/test.hpp"
-
-#include <algorithm>
-#include <initializer_list>
+#include "stl.h"
+#include "test.hpp"
 
 //=================================================
 void test_initializer_list() {

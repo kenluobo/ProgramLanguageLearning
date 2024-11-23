@@ -1,6 +1,5 @@
-#include "utils/test.hpp"
-#include <cstdint>
-#include <string>
+#include "stl.h"
+#include "test.hpp"
 
 //==================================================================
 enum class AnimalCategory : std::uint8_t {

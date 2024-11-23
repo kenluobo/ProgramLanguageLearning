@@ -1,7 +1,5 @@
-#include "utils/test.hpp"
-
-#include <cstdio>
-#include <version>
+#include "test.hpp"
+#include "stl.h"
 
 //=============================================================================
 #ifdef __has_include          // 检查 __has_include 是否存在
@@ -97,6 +95,22 @@ void test_fallthrought_attribute(int choice) {
   default:
     placeholder;
   }
+}
+
+//=============================================================================
+[[nodiscard]]
+int get_error_no() {
+  return 1;
+}
+
+[[nodiscard("error_no shell be handled")]]
+int get_error_no(int a = 10) {
+  return a;
+}
+
+void test_nodiscard_attribute() {
+  // get_error_no(); // cause compilation error
+  get_error_no(1);
 }
 
 //=============================================================================

@@ -1,6 +1,5 @@
-#include "utils/test.hpp"
-
-#include <cstring>
+#include "stl.h"
+#include "test.hpp"
 
 struct TrivialClass {
   int a;

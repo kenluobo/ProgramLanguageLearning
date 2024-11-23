@@ -1,6 +1,5 @@
-#include "utils/test.hpp"
-
-#include <cstdarg>
+#include "stl.h"
+#include "test.hpp"
 
 //===========================================================
 void out_args(const char *msg, ...) {
