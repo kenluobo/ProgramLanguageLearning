@@ -1,6 +1,5 @@
-#include "utils/test.hpp"
-
-#include <typeinfo>
+#include "stl.h"
+#include "test.hpp"
 
 //=====================================================
 class Base {
