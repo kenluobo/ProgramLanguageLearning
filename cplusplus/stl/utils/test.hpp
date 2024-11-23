@@ -13,3 +13,9 @@
 template <typename... Args> void out(Args... args) {
   (std::cout << ... << args) << "\n";
 }
+
+#define OUT_FUNC_INFO(...)                                                     \
+  do {                                                                         \
+    out("Current Func: ", __PRETTY_FUNCTION__, " ",                            \
+        CONNECT_STRING(__VA_ARGS__));                                          \
+  } while (0);

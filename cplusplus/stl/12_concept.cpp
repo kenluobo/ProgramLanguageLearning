@@ -32,6 +32,7 @@ void test_derived_from() {
   std::cout << std::boolalpha;
   out(std::derived_from<decltype(d), decltype(b)> == true);
 
+
   print_base_and_derived_class(b,d);
   print_base_and_derived_class(d,b);
 }
