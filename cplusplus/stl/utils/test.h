@@ -1,6 +1,7 @@
-#include <cstdio>
-#include <iostream>
-#include <version>
+#ifndef TEST_H
+#define TEST_H
+
+#include "stl.h"
 
 #define TEST(FUNC, ...)                                                        \
   do {                                                                         \
@@ -9,6 +10,7 @@
   } while (0);
 
 #define CONNECT_STRING(...) (#__VA_ARGS__)
+#include <iostream>
 
 template <typename... Args> void out(Args... args) {
   (std::cout << ... << args) << "\n";
@@ -19,3 +21,5 @@ template <typename... Args> void out(Args... args) {
     out("Current Func: ", __PRETTY_FUNCTION__, " ",                            \
         CONNECT_STRING(__VA_ARGS__));                                          \
   } while (0);
+
+#endif

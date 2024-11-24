@@ -1,5 +1,5 @@
 #include "stl.h"
-#include "test.hpp"
+#include "test.h"
 
 //=====================================================
 class Base {
