@@ -1,4 +1,4 @@
-#include "test.hpp"
+#include "test.h"
 
 //=============================================================================
 #define MAKE_FIXED_NAME_1(prefix, name) (#prefix "_" #name)

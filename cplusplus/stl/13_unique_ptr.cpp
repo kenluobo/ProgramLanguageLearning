@@ -1,30 +1,6 @@
+#include "class_demo.h"
 #include "stl.h"
-#include "test.hpp"
-
-//====================================================
-class Base {
-public:
-  Base() { OUT_FUNC_INFO(); }
-  Base(const Base &b) { OUT_FUNC_INFO(); }
-  Base(const Base &&b) { OUT_FUNC_INFO(); }
-  Base operator=(const Base *b) {
-    OUT_FUNC_INFO();
-    return *b;
-  }
-  virtual ~Base() { OUT_FUNC_INFO(); }
-
-public:
-  virtual void out_msg() { out("call ", 1); }
-};
-
-class Derived : public Base {
-public:
-  Derived() { OUT_FUNC_INFO(); }
-  virtual ~Derived() { OUT_FUNC_INFO(); }
-
-public:
-  virtual void out_msg() override { out("call ", 2); }
-};
+#include "test.h"
 
 //====================================================
 void test_unique_ptr_1() {

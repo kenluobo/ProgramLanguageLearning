@@ -1,5 +1,5 @@
 #include "stl.h"
-#include "test.hpp"
+#include "test.h"
 
 //==================================================================
 enum class AnimalCategory : std::uint8_t {

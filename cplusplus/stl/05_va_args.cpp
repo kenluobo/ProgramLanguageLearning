@@ -1,5 +1,5 @@
 #include "stl.h"
-#include "test.hpp"
+#include "test.h"
 
 //===========================================================
 void out_args(const char *msg, ...) {

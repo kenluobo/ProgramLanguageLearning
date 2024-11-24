@@ -1,5 +1,5 @@
 #include "stl.h"
-#include "test.hpp"
+#include "test.h"
 
 //==============================================================
 void handle_abort_signal(int signal_no) {

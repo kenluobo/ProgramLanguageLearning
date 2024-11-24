@@ -1,5 +1,5 @@
 #include "stl.h"
-#include "test.hpp"
+#include "test.h"
 
 //=============================================================
 #define IS_SAME(TY1, TY2)                                                      \
