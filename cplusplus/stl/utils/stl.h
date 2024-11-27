@@ -9,8 +9,10 @@
 #include <cstring>
 
 #include <algorithm>
+#include <functional>
 #include <initializer_list>
 #include <memory>
+#include <sstream>
 #include <string>
 #include <type_traits>
 #include <typeinfo>
