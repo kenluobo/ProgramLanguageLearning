@@ -1,6 +1,7 @@
 #ifndef TEST_H
 #define TEST_H
 
+#include "container_to_string.h"
 #include "stl.h"
 
 #define TEST(FUNC, ...)                                                        \
