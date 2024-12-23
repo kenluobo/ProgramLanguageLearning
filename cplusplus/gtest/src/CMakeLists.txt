@@ -1,5 +1,7 @@
 #==============================================
-set(TOOL_SRC_FILES Utils.cpp)
+set(TOOL_SRC_FILES
+		Utils.cpp
+)
 
 set(TOOL_SRC_INCLUDE_DIR ${CMAKE_CURRENT_SOURCE_DIR})
 
