@@ -1,10 +1,13 @@
-set(GOOGLETEST_DEMO_SRC_FILES testDynamicArray.cpp)
+#==============================================
+set(TOOL_SRC_FILES Utils.cpp)
 
-add_executable(googletestDemo ${GOOGLETEST_DEMO_SRC_FILES})
+set(TOOL_SRC_INCLUDE_DIR ${CMAKE_CURRENT_SOURCE_DIR})
 
-target_link_libraries(googletestDemo gtest)
+add_library(Tools ${LINK_TYPE} ${TOOL_SRC_FILES})
 
-target_include_directories(googletestDemo PRIVATE ${CMAKE_CURRENT_SOURCE_DIR})
+#==============================================
+add_executable(app Main.cpp)
 
-enable_testing()
-add_test(NAME testDemo COMMAND googletestDemo)
+target_include_directories(app PRIVATE ${TOOLS_SRC_INCLUDE_DIR})
+
+target_link_libraries(app PRIVATE Tools)

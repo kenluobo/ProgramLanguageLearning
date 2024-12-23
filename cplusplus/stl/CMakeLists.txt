@@ -26,6 +26,17 @@ project(
 set(CMAKE_CXX_STANDARD 23)
 set(CMAKE_CXX_STANDARD_REQUIRED NO)
 
+# use llvm libcxx
+if (DEFINED LLVM_LIB_CXX_DIR)
+  set(DEFAULT_CXX_INCLUDE_DIR "${LLVM_LIB_CXX_DIR}/c++/v1")
+  message(STATUS "Default include search directory: ${DEFAULT_CXX_INCLUDE_DIR}")
+
+  set(DEFAULT_CXX_LIB_DIR "${LLVM_LIB_CXX_DIR}/lib")
+  message(STATUS "Default library search directory: ${DEFAULT_CXX_LIB_DIR}")
+else ()
+  message(FATAL_ERROR "Must specify LLVM_LIB_CXX_DIR")
+endif ()
+
 set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/bin)
 set(CMAKE_LIBRARY_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/lib)
 set(CMAKE_ARCHIVE_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/lib)
@@ -33,7 +44,21 @@ set(CMAKE_ARCHIVE_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/lib)
 file(GLOB CPP_SOURCE_FILES "*.cpp")
 
 foreach (CPP_FILE ${CPP_SOURCE_FILES})
-  get_filename_component(FILE_NAME ${CPP_FILE} NAME_WE)
-  add_executable(${FILE_NAME} ${CPP_FILE})
-  target_include_directories(${FILE_NAME} PRIVATE utils)
+  get_filename_component(TARGET ${CPP_FILE} NAME_WE)
+  add_executable(${TARGET} ${CPP_FILE})
+  target_include_directories(${TARGET} PRIVATE utils)
+  target_link_options(${TARGET}
+      PRIVATE
+      -nostdinc++ -isystem ${DEFAULT_CXX_INCLUDE_DIR}
+      -nostdlib++ -L ${DEFAULT_CXX_LIB_DIR}
+      -lc++
+      -lc++abi
+      -lc++experimental
+      -lunwind
+      -lc
+      -lm
+      -lpthread
+      -Wl,-rpath,${DEFAULT_CXX_LIB_DIR}
+  )
+
 endforeach ()
