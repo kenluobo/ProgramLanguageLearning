@@ -40,6 +40,9 @@ option(ENABLE_BUILD_SHARED "Use shared link" ON)
 if (${ENABLE_BUILD_SHARED})
   set(LINK_TYPE SHARED)
   message(STATUS "Use dynamic link way")
+
+  # add -fPIC option
+  set(CMAKE_POSITION_INDEPENDENT_CODE ON)
 elseif ()
   set(LINK_TYPE STATIC)
   message(STATUS "Use static link way")
@@ -66,6 +69,15 @@ cpmaddpackage(
     OPTIONS
     "INSTALL_GTEST OFF"
     "gtest_force_shared_crt"
+)
+
+cpmaddpackage(
+    NAME fmt
+    GITHUB_REPOSITORY fmtlib/fmt
+    GIT_TAG 11.0.2
+    VERSION 11.0.2
+    OPTIONS
+    "FMT_HEADER_ONLY=ON"
 )
 
 option(ENABLE_TESTS "Run test cases" ON)
