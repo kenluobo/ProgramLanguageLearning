@@ -2,6 +2,7 @@ set(TEST_INCLUDE_DIR ${CMAKE_SOURCE_DIR}/src)
 set(TEST_LIBS
 		Tools
 		gtest
+		gmock
 )
 
 file(GLOB TEST_FILES "*.cpp")
