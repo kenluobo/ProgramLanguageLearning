@@ -4,6 +4,7 @@
 
 - [ ] c
 - [ ] cplusplus
+- [ ] x86 assembly language
 - [ ] arm assembly language
 - [ ] python
 - [ ] rust
