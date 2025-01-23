@@ -1,0 +1,6 @@
+# dependency lockfile
+Cargo.lock
+
+# build directory
+target
+
