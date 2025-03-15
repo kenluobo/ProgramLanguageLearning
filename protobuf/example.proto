@@ -1,0 +1,9 @@
+syntax = "proto3";  // 使用 Protobuf 3 语法
+
+package myproto;    // 定义命名空间
+
+message Person {    // 定义消息类型
+  int32 id = 1;     
+  string name = 2;
+  repeated string emails = 3;  // 可重复字段
+}

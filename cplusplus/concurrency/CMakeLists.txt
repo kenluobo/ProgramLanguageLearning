@@ -32,11 +32,35 @@ set(CMAKE_ARCHIVE_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/lib)
 
 find_package(Threads REQUIRED)
 
+# Include CPM for package management
+set(CPM_DOWNLOAD_VERSION 0.36.0)
+set(CPM_DOWNLOAD_LOCATION "${CMAKE_BINARY_DIR}/cmake/CPM_${CPM_DOWNLOAD_VERSION}.cmake")
+
+if(NOT (EXISTS ${CPM_DOWNLOAD_LOCATION}))
+  message(STATUS "Downloading CPM.cmake to ${CPM_DOWNLOAD_LOCATION}")
+  file(DOWNLOAD
+       https://github.com/cpm-cmake/CPM.cmake/releases/download/v${CPM_DOWNLOAD_VERSION}/CPM.cmake
+       ${CPM_DOWNLOAD_LOCATION}
+  )
+endif()
+
+include(${CPM_DOWNLOAD_LOCATION})
+
+# Add fmt library
+CPMAddPackage(
+  NAME fmt
+  GITHUB_REPOSITORY fmtlib/fmt
+  GIT_TAG 9.1.0
+  OPTIONS
+    "FMT_INSTALL OFF"
+)
+
 file(GLOB CPP_SOURCE_FILES "*.cpp")
 
 foreach (CPP_FILE ${CPP_SOURCE_FILES})
   get_filename_component(FILE_NAME ${CPP_FILE} NAME_WE)
   add_executable(${FILE_NAME} ${CPP_FILE})
   target_include_directories(${FILE_NAME} PRIVATE utils)
-  target_link_libraries(${FILE_NAME} PRIVATE Threads::Threads)
+  target_link_libraries(${FILE_NAME} PRIVATE Threads::Threads fmt::fmt)
 endforeach ()
+
