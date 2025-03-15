@@ -1,4 +1,5 @@
-# learn program language grammar, standard library, third party library, tools and domain knowledge.
+# kenluobo's knowledge
+learn program language grammar, standard library, third party library, tools and domain knowledge.
 
 ## program language
 
@@ -41,18 +42,25 @@
 ## domain knowledge
 
 ### compiler
-- [ ] lexical parser
-- [ ] syntax parser
-- [ ] semantic parser
+
+#### class
+- [ ] [cs143](http://web.stanford.edu/class/cs143/)
+
+#### core concepts
+- [ ] lexical analysis
+- [ ] syntax analysis
+- [ ] semantic analysis
 - [ ] intermediate representation
 - [ ] optimization
 - [ ] code generation
-- [ ] just in time
-- [ ] interpreter
 
 ### program analysis
 
-#### theory
+#### class
+- [ ] [NJU Program Static Analysis](https://space.bilibili.com/2919428/lists/342930?type=season)
+- [ ] [PKU Software Analysis](https://xiongyingfei.github.io/SA/2020/main.htm)
+
+#### core concepts
 - [ ] data flow analysis
 - [ ] control flow analysis
 - [ ] iterator analysis
@@ -71,9 +79,19 @@
 - [ ] vast
 - [ ] codeql
 
+### programming language
+- [ ] [cs242](https://stanford-cs242.github.io/f19/)
+
+### computer architecture
+- [ ] [计算机组成与设计：硬件/软件接口 RISC-V版（原书第2版）]()
+
 ### operating system
 
-#### theory
+#### class
+- [ ] [xv6](https://th0ar.gitbooks.io/xv6-chinese/content/index.html)
+- [ ] [南京大学 "操作系统原理" ](https://space.bilibili.com/202224425/lists/4823953?type=season)
+
+#### core concepts
 - [ ] process management
 - [ ] thread & concurrency
 - [ ] memory management
@@ -83,19 +101,16 @@
 - [ ] network & distributed system
 - [ ] security & access control
 
-#### mini os
-- [ ] xv6
-- [ ] uCore
-- [ ] JOS
-- [ ] linux 0.11
-- [ ] zephyr
-
 ### network
 
-#### theory
+#### class
+- [ ] [cs144 class](https://cs144.github.io/)
+- [ ] [cs144 lab](https://github.com/CS144/minnow)
+
+#### core concepts
 - [ ] ip
-- [ ] tcp & udp
-- [ ] http & https & ftp & smtp & dns
+- [ ] tcp, upd
+- [ ] http, dns, fpt
 
 #### framework
 - [ ] posix socket
@@ -107,3 +122,9 @@
 
 ### data structure and algorithm
 > TODO
+
+## reference
+
+- cs 自学指南: https://csdiy.wiki/
+- csdiy 书籍推荐: https://csdiy.wiki/好书推荐/
+- zlibrary: https://zh.z-lib.gs/
