@@ -14,6 +14,11 @@ project(
 set(CMAKE_CXX_STANDARD 23)
 set(CMAKE_CXX_STANDARD_REQUIRED NO)
 
+message(STATUS "Use customize libcxx:
+-- $ cmake -G Ninja -DCMAKE_CXX_FLAGS=\"-nostdinc++ -isystem /home/klb/Code/llvm-19.1.2/install-libcxx/include/c++/v1\" 
+--                  -DCMAKE_EXE_LINKER_FLAGS=\"-nostdlib++ -L/home/klb/Code/llvm-19.1.2/install-libcxx/lib -lc++ -lunwind -Wl,-rpath,/home/klb/Code/llvm-19.1.2/install-libcxx/lib\" 
+--                  ..")
+
 # while use dynamic link way, fmt::fmt library required -fPIC option
 set(CMAKE_POSITION_INDEPENDENT_CODE ON)
 
@@ -24,6 +29,8 @@ set(CMAKE_ARCHIVE_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/lib)
 
 set(LIBRARY_OUTPUT_DIR ${CMAKE_LIBRARY_OUTPUT_DIRECTORY})
 set(INCLUDE_OUTPUT_DIR ${CMAKE_BINARY_DIR}/include)
+
+set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
 
 # add cpm download directory
 set(CPM_SOURCE_CACHE ${CMAKE_BINARY_DIR}/third-party)
@@ -44,25 +51,14 @@ cpmaddpackage(
 cpmaddpackage(
     NAME fmt
     GITHUB_REPOSITORY fmtlib/fmt
-    GIT_TAG 11.0.2
-    VERSION 11.0.2
+    GIT_TAG 11.1.4
+    VERSION 11.1.4
     OPTION
     "FMT_HEADER_ONLY=ON"
 )
 
-# use llvm libcxx
-if (DEFINED LLVM_LIB_CXX_DIR)
-  message(STATUS "Use llvm libcxx and specify ${LLVM_LIB_CXX_DIR}")
-
-  set(DEFAULT_CXX_INCLUDE_DIR "${LLVM_LIB_CXX_DIR}/include/c++/v1")
-  message(STATUS "Default include search directory: ${DEFAULT_CXX_INCLUDE_DIR}")
-
-  set(DEFAULT_CXX_LIB_DIR "${LLVM_LIB_CXX_DIR}/lib")
-  message(STATUS "Default library search directory: ${DEFAULT_CXX_LIB_DIR}")
-endif ()
-
 # add ctest
 enable_testing()
 
-add_subdirectory(old-source)
+# add_subdirectory(old-source)
 add_subdirectory(source)
