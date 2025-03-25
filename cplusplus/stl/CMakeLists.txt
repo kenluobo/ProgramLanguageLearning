@@ -14,10 +14,18 @@ project(
 set(CMAKE_CXX_STANDARD 23)
 set(CMAKE_CXX_STANDARD_REQUIRED NO)
 
-message(STATUS "Use customize libcxx:
--- $ cmake -G Ninja -DCMAKE_CXX_FLAGS=\"-nostdinc++ -isystem /home/klb/Code/llvm-19.1.2/install-libcxx/include/c++/v1\" 
---                  -DCMAKE_EXE_LINKER_FLAGS=\"-nostdlib++ -L/home/klb/Code/llvm-19.1.2/install-libcxx/lib -lc++ -lunwind -Wl,-rpath,/home/klb/Code/llvm-19.1.2/install-libcxx/lib\" 
---                  ..")
+# message(STATUS "Use customize libcxx:
+# -- $ cmake -G Ninja -DCMAKE_CXX_FLAGS=\"-nostdinc++ -isystem /home/klb/Code/llvm-19.1.2/install-libcxx/include/c++/v1\" 
+# --                  -DCMAKE_EXE_LINKER_FLAGS=\"-nostdlib++ -L/home/klb/Code/llvm-19.1.2/install-libcxx/lib -lc++ -lunwind -Wl,-rpath,/home/klb/Code/llvm-19.1.2/install-libcxx/lib\" 
+# --                  ..")
+if (DEFINED LLVM_LIBCXX_INSTALL_DIR)
+    message(STATUS "Use LLVM_LIBCXX_INSTALL_DIR: ${LLVM_LIBCXX_INSTALL_DIR}")
+    set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -nostdinc++ -isystem ${LLVM_LIBCXX_INSTALL_DIR}/include/c++/v1")
+    message(STATUS "CMAKE_CXX_FLAGS: ${CMAKE_CXX_FLAGS}")
+
+    set(CMAKE_EXE_LINKER_FLAGS "${CMAKE_EXE_LINKER_FLAGS} -nostdlib++ -L${LLVM_LIBCXX_INSTALL_DIR}/lib -lc++ -lunwind -Wl,-rpath,${LLVM_LIBCXX_INSTALL_DIR}/lib")
+    message(STATUS "CMAKE_EXE_LINKER_FLAGS: ${CMAKE_EXE_LINKER_FLAGS}")
+endif()
 
 # while use dynamic link way, fmt::fmt library required -fPIC option
 set(CMAKE_POSITION_INDEPENDENT_CODE ON)

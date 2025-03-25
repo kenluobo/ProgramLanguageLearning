@@ -1,6 +1,9 @@
 #ifndef COMMON_H
 #define COMMON_H
 
+// custom
+#include "person.h"
+
 // stl
 #include <algorithm>
 #include <numeric>
