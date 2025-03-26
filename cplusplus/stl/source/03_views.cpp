@@ -26,3 +26,17 @@ TEST(Views, drop){
   auto ret = data | std::views::drop(5);
   EXPECT_TRUE(std::ranges::equal(ret, std::views::iota(5, 10)));
 }
+
+TEST(Views, take_while) {
+  auto data = std::views::iota(0, 10);
+  auto ret = data | std::views::take_while([](int i) { return i % 2 == 0; });
+
+  EXPECT_TRUE(std::ranges::equal(ret, std::views::iota(0, 1)));
+}
+
+TEST(Views, drop_while) {
+  auto data = std::views::iota(0, 10);
+  auto ret = data | std::views::drop_while([](int i) { return i % 2 == 0; });
+
+  EXPECT_TRUE(std::ranges::equal(ret, std::views::iota(1, 10)));
+}
