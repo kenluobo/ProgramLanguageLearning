@@ -9,6 +9,7 @@
 #include <numeric>
 #include <set>
 #include <vector>
+#include <ranges>
 
 // third party
 #include <fmt/core.h>
