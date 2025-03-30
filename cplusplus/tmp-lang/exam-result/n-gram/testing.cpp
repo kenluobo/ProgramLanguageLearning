@@ -10,5 +10,6 @@ int main(int argc, char *argv[]) {
 
   for (const auto &currFile : files) {
     NGram ngram(currFile);
+    ngram.saveAsFile("test-out.txt");
   }
 }

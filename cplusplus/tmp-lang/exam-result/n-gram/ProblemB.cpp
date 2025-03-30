@@ -14,7 +14,7 @@ using namespace std;
 char replaceNonAlphaNum(char c) { return (isspace(c) || isdigit(c)) ? '_' : c; }
 
 // 提取n-gram
-void extractNGrams(const string& text, int n, map<string, int>& ngramMap) {
+void extractNGrams(const string &text, int n, map<string, int> &ngramMap) {
   string cleanedText;
   // 清理文本，替换空白字符和数字
   for (char c : text) {
@@ -29,15 +29,15 @@ void extractNGrams(const string& text, int n, map<string, int>& ngramMap) {
 }
 
 // 计算“out-of-place”距离
-int calculateOutOfPlaceDistance(const map<string, int>& docProfile,
-                                const map<string, int>& catProfile) {
+int calculateOutOfPlaceDistance(const map<string, int> &docProfile,
+                                const map<string, int> &catProfile) {
   int distance = 0;
   // 遍历文档的n-grams
-  for (const auto& docNgram : docProfile) {
+  for (const auto &docNgram : docProfile) {
     auto it = catProfile.find(docNgram.first);
     if (it != catProfile.end()) {
       // 找到相应n-gram的频率，计算其顺序差
-      int rankDoc = distance;  // 排序位置
+      int rankDoc = distance; // 排序位置
       int rankCat = distance;
       distance += abs(rankDoc - rankCat);
     } else {
@@ -49,8 +49,8 @@ int calculateOutOfPlaceDistance(const map<string, int>& docProfile,
 }
 
 // 识别文本的语言
-void identifyLanguage(const string& configFile, const string& inputFile,
-                      const string& outputFile) {
+void identifyLanguage(const string &configFile, const string &inputFile,
+                      const string &outputFile) {
   ifstream config(configFile);
   vector<pair<string, map<string, int>>> languageProfiles;
   string line;
@@ -85,7 +85,7 @@ void identifyLanguage(const string& configFile, const string& inputFile,
     // 计算与每种语言档案的距离
     string identifiedLanguage;
     int minDistance = INT_MAX;
-    for (const auto& langProfile : languageProfiles) {
+    for (const auto &langProfile : languageProfiles) {
       int distance =
           calculateOutOfPlaceDistance(docProfile, langProfile.second);
       if (distance < minDistance) {
@@ -97,7 +97,7 @@ void identifyLanguage(const string& configFile, const string& inputFile,
   }
 }
 
-int main(int argc, char* argv[]) {
+int main(int argc, char *argv[]) {
   if (argc != 4) {
     cerr << "Usage: ProblemA2 profile.config input_file output_file" << endl;
     return 1;

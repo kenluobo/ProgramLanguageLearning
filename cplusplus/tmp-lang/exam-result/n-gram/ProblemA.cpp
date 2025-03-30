@@ -13,7 +13,7 @@ using namespace std;
 char replaceNonAlphaNum(char c) { return (isspace(c) || isdigit(c)) ? '_' : c; }
 
 // 提取n-gram
-void extractNGrams(const string& text, int n, map<string, int>& ngramMap) {
+void extractNGrams(const string &text, int n, map<string, int> &ngramMap) {
   string cleanedText;
   // 清理文本，替换空白字符和数字
   for (char c : text) {
@@ -28,7 +28,7 @@ void extractNGrams(const string& text, int n, map<string, int>& ngramMap) {
 }
 
 // 生成语言的n-gram频率档案
-void generateNGramProfile(const string& inputFile, const string& outputFile) {
+void generateNGramProfile(const string &inputFile, const string &outputFile) {
   ifstream infile(inputFile);
   stringstream buffer;
   buffer << infile.rdbuf();
@@ -45,22 +45,24 @@ void generateNGramProfile(const string& inputFile, const string& outputFile) {
   vector<pair<string, int>> ngramVector(ngramFrequency.begin(),
                                         ngramFrequency.end());
   sort(ngramVector.begin(), ngramVector.end(),
-       [](const pair<string, int>& a, const pair<string, int>& b) {
-         if (a.second == b.second) return a.first < b.first;  // 字典序排列
-         return a.second > b.second;                          // 按频率降序排列
+       [](const pair<string, int> &a, const pair<string, int> &b) {
+         if (a.second == b.second)
+           return a.first < b.first; // 字典序排列
+         return a.second > b.second; // 按频率降序排列
        });
 
   // 输出前400个n-grams
   ofstream outfile(outputFile);
   int count = 0;
-  for (const auto& ngram : ngramVector) {
-    if (count >= 400) break;
+  for (const auto &ngram : ngramVector) {
+    if (count >= 400)
+      break;
     outfile << ngram.first << " " << ngram.second << endl;
     count++;
   }
 }
 
-int main(int argc, char* argv[]) {
+int main(int argc, char *argv[]) {
   if (argc != 2) {
     cerr << "Usage: ProblemA1 profile.config" << endl;
     return 1;
