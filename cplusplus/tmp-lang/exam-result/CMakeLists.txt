@@ -11,4 +11,11 @@ set(CMAKE_ARCHIVE_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/lib)
 
 set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
 
+include(cmake/CPM.cmake)
+CPMAddPackage(
+    NAME robin-map
+    GITHUB_REPOSITORY Tessil/robin-map
+    GIT_TAG v1.4.0
+)
+
 add_subdirectory(n-gram)

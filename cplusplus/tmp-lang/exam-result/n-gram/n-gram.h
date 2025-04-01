@@ -1,6 +1,8 @@
 #ifndef N_GRAM_H
 #define N_GRAM_H
 
+#include <tsl/robin_map.h>
+
 #include <algorithm>
 #include <filesystem>
 #include <format>
@@ -75,23 +77,24 @@ class NGram {
     }
 
     std::string normalizedText = normalize(text);
-    if(normalizedText.empty()) {
+    if (normalizedText.empty()) {
       std::cerr << std::format("Warn: the file is empty: {}\n",
                                inputFile.string());
       return;
     }
     std::cout << normalizedText << std::endl;
 
-    Word3FrequencyTy w2f;
+    Word2FrequencyTy w2f;
+    w2f.reserve((1 + normalizedText.size()) * normalizedText.size() / 2);
     std::uint64_t calculateTimes = normalizedText.size();
     do {
       staticticalWordFrequency(normalizedText, calculateTimes--, w2f);
     } while (calculateTimes > 0);
 
-    Frequency2WordTy f2w;
-    calculateNGram(w2f, f2w, maxReversedLine);
+    Word2FrequencyVectorTy vec;
+    calculateNGram(w2f, vec, maxReversedLine);
 
-    frequency2Word = std::move(f2w);
+    word2FrequencyResult = std::move(vec);
   }
 
   void saveAsFile(const fs::path& outputFile) {
@@ -108,7 +111,7 @@ class NGram {
       return;
     }
 
-    std::for_each(frequency2Word.begin(), frequency2Word.end(),
+    std::for_each(word2FrequencyResult.begin(), word2FrequencyResult.end(),
                   [&ofs](const auto& w2f) {
                     ofs << w2f.second << " " << w2f.first << "\n";
                   });
@@ -117,8 +120,9 @@ class NGram {
   }
 
  private:
-  using Word3FrequencyTy = std::pmr::unordered_map<std::string_view, unsigned, std::less<>>;
-  using Frequency2WordTy = std::multimap<unsigned, std::string_view, std::greater<>>;
+  using Word2FrequencyTy = tsl::robin_map<std::string_view, unsigned>;
+  using Word2FrequencyVectorTy =
+      std::vector<std::pair<std::string_view, unsigned>>;
 
  private:
   std::string normalize(const std::string& text) {
@@ -143,36 +147,49 @@ class NGram {
   }
 
   void staticticalWordFrequency(const std::string& normalizedText,
-                                std::size_t windowSize, Word3FrequencyTy& f2w) {
+                                std::size_t windowSize, Word2FrequencyTy& w2f) {
     auto left = normalizedText.begin();
     auto right = std::next(left, windowSize);
     auto end = normalizedText.end();
     while (left != end && right != end) {
-      const std::string_view currStr(left, right);
-      if (auto it = f2w.find(currStr); it != f2w.end()) {
-        it->second++;
+      const std::string_view currStr(
+          normalizedText.data() + std::distance(normalizedText.begin(), left),
+          windowSize);
+      if (auto it = w2f.find(currStr); it != w2f.end()) {
+        ++w2f[currStr];
       } else {
-        f2w.emplace(currStr, 1);
+        w2f.emplace(currStr, 1);
       }
+
+      std::cout << std::format(
+                       "w2f size: {}/{}", w2f.size(),
+                       (1 + normalizedText.size()) * normalizedText.size() / 2)
+                << std::endl;
 
       left = std::next(left, 1);
       right = std::next(right, 1);
     }
   }
 
-  void calculateNGram(const Word3FrequencyTy w2f, Frequency2WordTy& f2w, std::size_t maxReversedLine) {
-    unsigned count = 1;
-    for (const auto& [word, frequency] : w2f) {
-      if(count++ > maxReversedLine) {
-        break;
-      }
+  void calculateNGram(const Word2FrequencyTy w2f, Word2FrequencyVectorTy& vec,
+                      std::size_t maxReversedLine) {
+    vec.assign(w2f.begin(), w2f.end());
+    auto comOp = [](const auto& a, const auto& b) {
+      if (a.second != b.second) return a.second > b.second;
+      return a.first < b.first;
+    };
 
-      f2w.emplace(frequency, word);
+    if (vec.size() > maxReversedLine) {
+      std::partial_sort(vec.begin(), std::next(vec.begin(), maxReversedLine),
+                        vec.end(), comOp);
+      vec.resize(maxReversedLine);
+    } else {
+      std::sort(vec.begin(), vec.end(), comOp);
     }
   }
 
  private:
-  Frequency2WordTy frequency2Word;
+  Word2FrequencyVectorTy word2FrequencyResult;
 };
 
 #endif
