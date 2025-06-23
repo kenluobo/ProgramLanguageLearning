@@ -76,7 +76,7 @@ class NGram {
       return;
     }
 
-    std::string normalizedText = normalize(text);
+    normalizedText = normalize(text);
     if (normalizedText.empty()) {
       std::cerr << std::format("Warn: the file is empty: {}\n",
                                inputFile.string());
@@ -112,8 +112,8 @@ class NGram {
     }
 
     std::for_each(word2FrequencyResult.begin(), word2FrequencyResult.end(),
-                  [&ofs](const auto& w2f) {
-                    ofs << w2f.second << " " << w2f.first << "\n";
+                  [&ofs](const auto& item) {
+                    ofs << item.first << " " << item.second << "\n";
                   });
 
     ofs.close();
@@ -189,6 +189,7 @@ class NGram {
   }
 
  private:
+  std::string normalizedText;
   Word2FrequencyVectorTy word2FrequencyResult;
 };
 

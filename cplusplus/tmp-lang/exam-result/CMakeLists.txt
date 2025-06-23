@@ -11,6 +11,7 @@ set(CMAKE_ARCHIVE_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/lib)
 
 set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
 
+set(CPM_SOURCE_CACHE ${CMAKE_BINARY_DIR}/third-party)
 include(cmake/CPM.cmake)
 CPMAddPackage(
     NAME robin-map

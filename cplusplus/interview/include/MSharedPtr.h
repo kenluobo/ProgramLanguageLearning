@@ -3,30 +3,80 @@
 
 #include <cstddef>
 
+namespace klb {
+
 template <typename T>
 class MSharedPtr {
  public:
   MSharedPtr() : ptr(nullptr), ref_cnt(nullptr) {}
 
-  MSharedPtr(T* t_ptr)
-      : ptr(t_ptr ? t_ptr : new T), ref_cnt(new std::size_t{1}) {}
+  MSharedPtr(T* t_ptr) : ptr(t_ptr ? t_ptr : new T), ref_cnt(new int{1}) {}
 
-  MSharedPtr(const MySahredPtr<T>& msptr) {
-    if (nullptr != msptr) {
-      ptr = msptr.ptr;
-      ref_cnt = msptr.ref_cnt;
+  MSharedPtr(const MSharedPtr<T>& other) {
+    if (nullptr != other) {
+      ptr = other.ptr;
+      ref_cnt = other.ref_cnt;
+
+      if (nullptr != ref_cnt) {
+        ++(*ref_cnt);
+      }
     }
   }
 
-  T* get() { return ptr; }
+  MSharedPtr& operator=(const MSharedPtr<T>& other) {
+    release();
+    if (nullptr != other) {
+      ptr = other.ptr;
+      ref_cnt = other.ref_cnt;
 
+      if (nullptr != ref_cnt) {
+        ++(*ref_cnt);
+      }
+    }
+
+    return *this;
+  }
+
+  ~MSharedPtr() { release(); }
+
+ public:
   T* operator->() { return ptr; }
 
-  T operator*() { return *ptr; }
+  T& operator*() { return *this; }
+
+ public:
+  void reset(T* p = nullptr) {
+    release();
+
+    if (nullptr != p) {
+      ptr = p;
+      ref_cnt = new int{1};
+    } else {
+      ptr = nullptr;
+      ref_cnt = nullptr;
+    }
+  }
+
+  int use_count() const { return ref_cnt ? *ref_cnt : 0; }
+
+  T* get() const { return ptr; }
+
+ private:
+  void release() {
+    if (nullptr != ref_cnt) {
+      --(*ref_cnt);
+      if (0 == (*ref_cnt)) {
+        delete ptr;
+        delete ref_cnt;
+      }
+    }
+  }
 
  private:
   T* ptr;
-  std::size_t* ref_cnt;
+  int* ref_cnt;
 };
+
+}  // namespace klb
 
 #endif

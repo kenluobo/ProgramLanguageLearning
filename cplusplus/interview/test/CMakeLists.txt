@@ -10,3 +10,8 @@ target_link_libraries(mtest
   libTools
   gtest
 )
+
+target_include_directories(mtest
+  PRIVATE
+  ${CMAKE_SOURCE_DIR}/include
+)
