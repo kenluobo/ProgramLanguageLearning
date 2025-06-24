@@ -1,8 +1,8 @@
 cmake_minimum_required(VERSION 3.24.2 FATAL_ERROR)
 
-include(cmake/find_clang.cmake)
-set_clang_as_c_compiler()
-set_clang_plusplus_as_cxx_compiler()
+#include(cmake/find_clang.cmake)
+#set_clang_as_c_compiler()
+#set_clang_plusplus_as_cxx_compiler()
 
 project(
     "learn-standard-library"
