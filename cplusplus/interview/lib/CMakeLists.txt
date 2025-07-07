@@ -1,6 +1,6 @@
 add_library(libTools
   STATIC
-  MSharedPtr.cpp
+  Dummy.cpp
 )
 
 target_include_directories(libTools

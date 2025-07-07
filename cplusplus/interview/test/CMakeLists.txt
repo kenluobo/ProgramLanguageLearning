@@ -1,6 +1,6 @@
 add_library(libTest
   STATIC
-  TestMSharedPtr.cpp
+  TestSharedPtr.cpp
 )
 
 add_executable(mtest main.cpp)
