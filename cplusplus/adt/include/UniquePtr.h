@@ -4,19 +4,19 @@
 namespace klb {
 
 template <typename T>
-class MUniquePtr {
+class UniquePtr {
  public:
-  MUniquePtr(T *p = nullptr) : ptr(p) {}
+  UniquePtr(T *p = nullptr) : ptr(p) {}
 
-  MUniquePtr(const MUniquePtr<T> &other) = delete;
+  UniquePtr(const UniquePtr<T> &other) = delete;
 
-  MUniquePtr(MUniquePtr<T> &&other) noexcept : ptr(other.ptr) {
+  UniquePtr(UniquePtr<T> &&other) noexcept : ptr(other.ptr) {
     other.ptr = nullptr;
   }
 
-  MUniquePtr &operator=(const MUniquePtr<T> &other) = delete;
+  UniquePtr &operator=(const UniquePtr<T> &other) = delete;
 
-  MUniquePtr &operator=(MUniquePtr<T> &&other) noexcept {
+  UniquePtr &operator=(UniquePtr<T> &&other) noexcept {
     if (*this != other) {
       ptr = other.ptr;
       other.ptr = nullptr;
@@ -25,7 +25,7 @@ class MUniquePtr {
     return *this;
   }
 
-  ~MUniquePtr() { delete ptr; }
+  ~UniquePtr() { delete ptr; }
 
  public:
   T *get() const { return ptr; }

@@ -3,6 +3,8 @@
 
 #include <cstddef>
 
+namespace klb {
+
 template <typename T>
 class DynamicArray {
  public:
@@ -121,5 +123,7 @@ class DynamicArray {
 
   T* data;
 };
+
+}  // namespace klb
 
 #endif

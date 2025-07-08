@@ -6,13 +6,13 @@
 namespace klb {
 
 template <typename T>
-class MSharedPtr {
+class SharedPtr {
  public:
-  MSharedPtr() : ptr(nullptr), ref_cnt(nullptr) {}
+  SharedPtr() : ptr(nullptr), ref_cnt(nullptr) {}
 
-  MSharedPtr(T* t_ptr) : ptr(t_ptr ? t_ptr : new T), ref_cnt(new int{1}) {}
+  SharedPtr(T* t_ptr) : ptr(t_ptr ? t_ptr : new T), ref_cnt(new int{1}) {}
 
-  MSharedPtr(const MSharedPtr<T>& other) {
+  SharedPtr(const SharedPtr<T>& other) {
     if (nullptr != other) {
       ptr = other.ptr;
       ref_cnt = other.ref_cnt;
@@ -23,7 +23,7 @@ class MSharedPtr {
     }
   }
 
-  MSharedPtr& operator=(const MSharedPtr<T>& other) {
+  SharedPtr& operator=(const SharedPtr<T>& other) {
     release();
     if (nullptr != other) {
       ptr = other.ptr;
@@ -37,7 +37,7 @@ class MSharedPtr {
     return *this;
   }
 
-  ~MSharedPtr() { release(); }
+  ~SharedPtr() { release(); }
 
  public:
   T* operator->() { return ptr; }

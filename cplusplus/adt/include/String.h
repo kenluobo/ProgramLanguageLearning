@@ -8,23 +8,23 @@
 
 namespace klb {
 
-class MString {
+class String {
  public:
-  MString() : data(nullptr), size(0), capacity(0) {}
+  String() : data(nullptr), size(0), capacity(0) {}
 
-  MString(const char *ptr) {
+  String(const char *ptr) {
     size = std::strlen(ptr);
     expand_capacity(size);
     std::memcpy(data, ptr, size);
   }
 
-  MString(const MString &other) {
+  String(const String &other) {
     size = other.size;
     expand_capacity(size);
     std::memcpy(data, other.data, size);
   }
 
-  MString &operator=(const char *ptr) {
+  String &operator=(const char *ptr) {
     size = std::strlen(ptr);
     expand_capacity(size);
     std::memcpy(data, ptr, size);
@@ -32,7 +32,7 @@ class MString {
     return *this;
   }
 
-  MString &operator=(const MString &other) {
+  String &operator=(const String &other) {
     if (this->data == other.data) {
       return *this;
     }
@@ -44,7 +44,7 @@ class MString {
     return *this;
   }
 
-  ~MString() {
+  ~String() {
     std::free(data);
     size = 0;
     capacity = 0;
@@ -72,9 +72,9 @@ class MString {
     return std::string::npos;
   }
 
-  MString substr(std::size_t pos = 0,
+  String substr(std::size_t pos = 0,
                  std::size_t len = std::string::npos) const {
-    MString result;
+    String result;
     if (pos >= size) {
       return result;
     }
